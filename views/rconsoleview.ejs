@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>rconsole</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/script.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid">
+
+      <div class="card">
+        <div class="card-body">
+          <h1>R Console</h1>
+          <div class="paddings">
+            <form action="/rconsole/grconsole" method="post">
+              <div class="form-group">
+                <textarea class="form-control" id="rcode" name="rcode" rows="3"><%= rcode %></textarea>
+              </div>
+              <div class="paddings">
+                <div class="d-grid mx-auto">
+                <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Run</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <textarea class="form-control" id="sql" name="sql" rows="3" disabled><%= routput %></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
