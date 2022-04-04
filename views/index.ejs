@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid paddings marginl">
+      <%- include('templates/statustemplate.ejs',{database: database}) %>
+      <%- include('templates/errortemplate.ejs',{currentWebError: currentWebError}) %>
+    </div>
+
+  </body>
+</html>

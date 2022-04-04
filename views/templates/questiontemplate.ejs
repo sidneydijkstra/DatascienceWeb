@@ -1,0 +1,24 @@
+<div class="col-xl" id="q-<%= question.id %>">
+  <div class="card margins <%= table ? "border-success" : "" %>">
+    <div class="card-header">
+      <%= question.id %>. <%= question.question %>
+    </div>
+    <div class="card-body">
+      <form class="form" action="/question/qget" method="post">
+        <form action="#" method="post">
+          <div class="form-group">
+            <textarea class="form-control" rows="5" disabled><%= question.sql %></textarea>
+          </div>
+          <div class="form-group">
+            <input type="number" name="id" value="<%= question.id %>" hidden>
+            <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Get</button>
+          </div>
+        </form>
+        <% if(table){ %>
+          <hr>
+          <%- include('./tabletemplate.ejs',{table: table}) %>
+        <% } %>
+      </form>
+    </div>
+  </div>
+</div>

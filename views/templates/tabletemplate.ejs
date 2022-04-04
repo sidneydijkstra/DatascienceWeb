@@ -1,0 +1,45 @@
+<div class="paddings">
+  <table class="table">
+
+    <% if(table && table.state){ %>
+
+    <thead class="thead-dark">
+      <% table.columns.forEach(function(name) { %>
+        <th class="col"><%= name %></th>
+      <% }); %>
+    </thead>
+    <tbody>
+      <% table.result.forEach(function(row) { %>
+        <tr>
+        <% Object.values(row).forEach(function(col, i) { %>
+          <% if(i == 0){ %>
+            <th><%= col %></th>
+          <% }else{ %>
+            <td><%= col %></td>
+          <% } %>
+        <% }); %>
+        </tr>
+      <% }); %>
+    </tbody>
+
+    <% }else{ %>
+
+      <thead class="thead-dark">
+        <th class="col">#</th>
+        <th class="col">ERROR</th>
+        <th class="col">ERROR</th>
+        <th class="col">ERROR</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th>#</th>
+          <td>ERROR</td>
+          <td>ERROR</td>
+          <td>ERROR</td>
+        </tr>
+      </tbody>
+
+    <% } %>
+
+  </table>
+</div>

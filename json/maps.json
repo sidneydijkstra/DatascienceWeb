@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "question": "Waar is welke acteur in Nederland geboren?",
+    "cluster": true,
+    "sql": "SELECT b.fullName, b.date, TRIM(b.placeOfBirth) as placeOfBirth, TRIM(b.placeOfBirth) as loc FROM db_datascience.Biography b WHERE SUBSTRING_INDEX(b.placeOfBirth, ', ', -1) = 'Netherlands' LIMIT 10;"
+  },
+  {
+    "id": 2,
+    "question": "Wat zijn de gemiddelde kosten van films per land?",
+    "cluster": false,
+    "sql": "SELECT SUBSTRING_INDEX(TRIM(b.budget), ' ', 1) AS currency, ROUND(AVG(REPLACE(SUBSTRING_INDEX(TRIM(b.budget), ' ', -1), ',', ''))) AS budget, COUNT(c.country), c.country as loc FROM db_datascience.Business b INNER JOIN db_datascience.Movie m ON m.business_Id = b.business_Id INNER JOIN db_datascience.Country c ON c.movie_Id = m.movie_Id GROUP BY c.country HAVING currency = 'EUR' LIMIT 10;"
+  }
+]

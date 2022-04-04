@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "In welke films speelde Joop Braakhekke?",
+    "rows": 8,
+    "sql": "SELECT a.movie_Id, a.biography_Id, ( SELECT b.biography_Id FROM db_datascience.Biography b WHERE b.surogat = CONV(SUBSTRING(CAST(SHA('Braakhekke, Joop') AS CHAR), 1, 16), 16, 10) ) AS id, a.actorName, a.movieOrShowName FROM db_datascience.Actor a HAVING a.biography_Id = id AND a.movie_Id IS NOT NULL LIMIT 10"
+  },
+  {
+    "id": 2,
+    "question": "Welke films spelen in meer dan 1 land?",
+    "rows": 8,
+    "sql": "SELECT iml.movie_Id, iml.title, COUNT(DISTINCT SUBSTRING_INDEX(iml.location, ', ', -1)) AS countryCount FROM db_datascience.MovieLocation iml RIGHT JOIN db_datascience.MovieLocation ml ON iml.movie_Id = ml.movie_Id GROUP BY iml.movie_Id HAVING countryCount > 1 LIMIT 10;"
+  },
+  {
+    "id": 3,
+    "question": "Wat is de kortste film met een waardering van 8.5 of hoger?",
+    "rows": 6,
+    "sql": "SELECT mrat.movie_Id, mrat.title, MAX(mrat.rating) AS rating, mrun.timeInMinutes FROM db_datascience.MovieRating mrat INNER JOIN db_datascience.MovieRuntime mrun ON mrat.movie_Id = mrun.movie_Id GROUP BY rating DESC LIMIT 1;"
+  },
+  {
+    "id": 4,
+    "question": "Welke schrijvers spelen in hun eigen films en welke films zijn dat?",
+    "rows": 9,
+    "sql": "SELECT w.actorName AS writerName, w.movieOrShowName, acto.movieOrShowName, actr.movieOrShowName FROM db_datascience.Writer w LEFT JOIN db_datascience.Actor acto ON w.movie_Id = acto.movie_Id AND w.serie_Id = acto.actorName LEFT JOIN db_datascience.Actress actr ON w.movie_Id = actr.movie_Id AND w.actorName = actr.actorName WHERE (acto.movie_Id IS NOT NULL AND actr.movie_Id IS NULL) OR (acto.movie_Id IS NULL AND actr.movie_Id IS NOT NULL) LIMIT 10;"
+  },
+  {
+    "id": 5,
+    "question": "Welke film heeft de hoogste score met de minste stemmen?",
+    "rows": 3,
+    "sql": "SELECT mr.title, mr.totalVoteCount, MIN(mr.rating) FROM db_datascience.MovieRating mr GROUP BY mr.totalVoteCount, mr.rating DESC LIMIT 1;"
+  },
+  {
+    "id": 6,
+    "question": "Welke films zijn (deels) gefilmd in Nederland?",
+    "rows": 4,
+    "sql": "SELECT ml.movieLocation_Id, ml.title, ml.location FROM db_datascience.MovieLocation ml WHERE SUBSTRING_INDEX(ml.location, ', ', -1) = 'Netherlands' LIMIT 10;"
+  },
+  {
+    "id": 7,
+    "question": "Welke film uit Nederland heeft het meest gekost om te maken?",
+    "rows": 10,
+    "sql": "SELECT m.movie_Id, m.title, c.country, SUBSTRING_INDEX(TRIM(b.budget), ' ', 1) AS currency, REPLACE(SUBSTRING_INDEX(TRIM(b.budget), ' ', -1), ',', '')*1 AS budget FROM db_datascience.Country c INNER JOIN db_datascience.Movie m ON m.movie_Id = c.movie_Id INNER JOIN db_datascience.Business b ON b.business_Id = m.business_Id HAVING c.country = 'Netherlands' ORDER BY budget DESC LIMIT 1;"
+  },
+  {
+    "id": 8,
+    "question": "Welke Nederlandse film heeft de laagste waardering?",
+    "rows": 7,
+    "sql": "SELECT mr.movie_Id, mr.title, c.country, mr.rating FROM db_datascience.Country c INNER JOIN db_datascience.MovieRating mr ON mr.movie_Id = c.movie_Id HAVING c.country = 'Netherlands' ORDER BY mr.rating LIMIT 1;"
+  },
+  {
+    "id": 9,
+    "question": "Welke acteurs uit Nederland spelen in een buitenlandse film?",
+    "rows": 11,
+    "sql": "SELECT b.fullName, b.placeOfBirth, c.movieOrShowName AS title, c.country FROM db_datascience.Biography b LEFT JOIN db_datascience.Actor acto ON acto.biography_Id = b.biography_Id LEFT JOIN db_datascience.Actress actr ON actr.biography_Id = b.biography_Id INNER JOIN db_datascience.Country c ON c.movie_Id = acto.movie_Id OR c.movie_Id = actr.movie_Id WHERE SUBSTRING_INDEX(b.placeOfBirth, ', ', -1) = 'Netherlands' AND c.country != 'Netherlands' LIMIT 10;"
+  },
+  {
+    "id": 10,
+    "question": "Welke Nederlandse acteurs spelen in drie of meer verschillende series?",
+    "rows": 12,
+    "sql": "SELECT b.fullName, b.placeOfBirth, COUNT(DISTINCT s.serie_Id) AS serieCount FROM db_datascience.Biography b LEFT JOIN db_datascience.Actor acto ON acto.biography_Id = b.biography_Id LEFT JOIN db_datascience.Actress actr ON actr.biography_Id = b.biography_Id INNER JOIN db_datascience.Serie s ON s.serie_Id = acto.serie_Id OR s.serie_Id = actr.serie_Id WHERE SUBSTRING_INDEX(b.placeOfBirth, ', ', -1) = 'Netherlands' GROUP BY b.fullName HAVING serieCount >= 3 LIMIT 10;"
+  }
+]

@@ -1,0 +1,155 @@
+{
+  "Business": [
+    "business_Id",
+    "businessName",
+    "year",
+    "budget",
+    "surogat"
+  ],
+
+  "Movie": [
+    "movie_Id",
+    "business_Id",
+    "title",
+    "startYear",
+    "attribute",
+    "note",
+    "endYear",
+    "surogat"
+  ],
+  "Serie": [
+    "serie_Id",
+    "business_Id",
+    "title",
+    "startYear",
+    "titleSerie",
+    "note",
+    "endYear",
+    "surogat"
+  ],
+
+  "Genre": [
+    "genre_Id",
+    "serie_Id",
+    "movie_Id",
+    "movieOrShowName",
+    "datum",
+    "typen",
+    "suspended",
+    "genre"
+  ],
+  "Country": [
+    "country_Id",
+    "serie_Id",
+    "movie_Id",
+    "movieOrShowName",
+    "datum",
+    "typen",
+    "suspended",
+    "country"
+  ],
+
+  "MovieLocation": [
+    "movieLocation_Id",
+    "movie_Id",
+    "title",
+    "startYear",
+    "attribute",
+    "note",
+    "location",
+    "comments"
+  ],
+  "MovieRating": [
+    "movieRating_Id",
+    "movie_Id",
+    "title",
+    "startYear",
+    "attribute",
+    "totalVoteCount",
+    "rating"
+  ],
+  "MovieRuntime": [
+    "movieRuntime_Id",
+    "movie_Id",
+    "title",
+    "startYear",
+    "attribute",
+    "note",
+    "countryTime",
+    "timeInMinutes",
+    "comments"
+  ],
+
+  "SerieLocation": [
+    "serieLocation_Id",
+    "serie_Id",
+    "title",
+    "startYear",
+    "titleSerie",
+    "note",
+    "location",
+    "comments"
+  ],
+  "SerieRating": [
+    "serieRating_Id",
+    "serie_Id",
+    "title",
+    "startYear",
+    "titleSerie",
+    "totalVoteCount",
+    "rating"
+  ],
+  "SerieRuntime": [
+    "serieRuntime_Id",
+    "serie_Id",
+    "title",
+    "startYear",
+    "titleSerie",
+    "note",
+    "countryTime",
+    "timeInMinutes",
+    "comments"
+  ],
+
+  "Biography": [
+    "biography_Id",
+    "fullName",
+    "date",
+    "placeOfBirth",
+    "surogat"
+  ],
+
+  "Actor": [
+    "actor_Id",
+    "movie_Id",
+    "biography_Id",
+    "serie_Id",
+    "actorName",
+    "movieOrShowName",
+    "date",
+    "epNameOrVoice",
+    "role"
+  ],
+  "Actress": [
+    "actress_Id",
+    "movie_Id",
+    "biography_Id",
+    "serie_Id",
+    "actorName",
+    "movieOrShowName",
+    "date",
+    "epNameOrVoice",
+    "role"
+  ],
+  "Writer": [
+    "writer_Id",
+    "movie_Id",
+    "biography_Id",
+    "serie_Id",
+    "actorName",
+    "movieOrShowName",
+    "date",
+    "attribute",
+    "comments"
+  ]
+}

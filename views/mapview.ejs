@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>T</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/map.ejs', {}) %>
+    <%- include('includes/script.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h1>Map</h1>
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <% maps.forEach((mapData, i) => { %>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link <%= ((currentMapId == -1 && i == 0) || currentMapId == mapData.id) ? "active" : "" %>" id="nav-<%= mapData.id %>-tab" data-bs-toggle="tab" data-bs-target="#nav-<%= mapData.id %>" type="button" role="tab" aria-controls="nav-<%= mapData.id %>" aria-selected="<%= ((currentMapId == -1 && i == 0) || currentMapId == mapData.id) ? "True" : "false" %>"><%= mapData.id %></button>
+                  </li>
+                <% }); %>
+              </ul>
+
+
+              <div class="tab-content" id="myTabContent">
+                <% maps.forEach((mapData, i) => { %>
+                  <div class="tab-pane fade show <%= ((currentMapId == -1 && i == 0) || currentMapId == mapData.id) ? "active" : "" %>" id="nav-<%= mapData.id %>" role="tabpanel" aria-labelledby="nav-<%= mapData.id %>-tab">
+                    <br>
+                    <h4><%= mapData.id %>. <%= mapData.question %></h4>
+                    <br>
+                    <form action="/map/mget" method="post">
+                      <div class="form-group">
+                        <textarea class="form-control" rows="5" disabled><%= mapData.sql %></textarea>
+                      </div>
+                      <div class="form-group">
+                        <input type="number" name="id" value="<%= mapData.id %>" hidden>
+                        <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Get</button>
+                      </div>
+                    </form>
+                  </div>
+                <% }); %>
+              </div>
+
+              <%- include('templates/maptemplate.ejs', {id: 0, map: map}) %>
+              <% if (map){ %>
+                <%- include('templates/tabletemplate.ejs',{table: map.table ? map.table : null}) %>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>

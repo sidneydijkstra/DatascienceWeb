@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-header">
+    Database Status
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-4 d-flex align-items-center justify-content-center">
+        <div class="text-center">
+        <% if(database.state){ %>
+            <i class="fas fa-cubes fa-10x"></i>
+            <br>
+            <button class="btn btn-success" type="button" disabled>
+              Connected
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            </button>
+        <% }else{ %>
+          <span class="fa-stack fa-6x">
+            <i class="fas fa-cubes fa-stack-1x"></i>
+            <i class="fas fa-ban fa-stack-2x"></i>
+          </span>
+          <br>
+          <button class="btn btn-danger" type="button" disabled>
+            Disconnected
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          </button>
+        <% } %>
+        </div>
+      </div>
+
+      <div class="col-8">
+        <h5 class="card-title">Database Info</h5>
+        <div class="form-group">
+          <label for="host">Host</label>
+          <input type="text" class="form-control" id="host" value="<%= database.host %>" disabled>
+        </div>
+        <div class="form-group">
+          <label for="port">Port</label>
+          <input type="text" class="form-control" id="port" value="<%= database.port %>" disabled>
+        </div>
+        <div class="form-group">
+          <label for="user">User</label>
+          <input type="text" class="form-control" id="user" value="<%= database.user %>" disabled>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

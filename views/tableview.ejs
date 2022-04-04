@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>table</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/script.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <h1>Table *.<%= selectedTable %></h1>
+          <div class="row">
+            <div class="col-6">
+              <div class="paddings">
+                <form action="/table/gtable" method="post">
+                  <div class="form-group">
+                    <textarea class="form-control" id="textarea" rows="3" style="resize:None;" disabled><%= table.sql %></textarea>
+                  </div>
+                  <div class="paddings">
+                    <select name="table" class="form-select w-100" aria-label="Select table">
+                      <% tables.forEach(function(name) { %>
+                        <% if(name == selectedTable){ %>
+                          <option value="<%= name %>" selected><%= name %></option>
+                        <% }else{ %>
+                          <option value="<%= name %>"><%= name %></option>
+                        <% } %>
+                      <% }); %>
+                    </select>
+                  </div>
+                  <div class="paddings">
+                    <input name="limit" class="form-control" type="number" placeholder="Limit" value="<%= limitTable %>">
+                  </div>
+                  <div class="paddings">
+                    <div class="d-grid mx-auto">
+                    <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Get</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="paddings">
+                <form action="/table/stable" method="post">
+                  <div class="padding">
+                    <% table.columns.forEach(function(name) { %>
+                      <div class="paddings">
+                        <input name="<%= name %>" class="form-control" type="text" placeholder="<%= name %>" value="<%- searchTable[name] ? searchTable[name] : "" %>">
+                      </div>
+                    <% }); %>
+                    <div class="paddings">
+                      <div class="d-grid mx-auto">
+                      <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Find</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <%- include('templates/tabletemplate.ejs',{table: table}) %>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

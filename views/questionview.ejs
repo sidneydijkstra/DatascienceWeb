@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Question</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/script.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid">
+        <% questions.forEach((question, i) => { %>
+          <% if((i % 2) == 0){ %>
+            <div class="row">
+          <% } %>
+            <%- include('templates/questiontemplate.ejs', {question: question, table: questionTables && questionTables[`${question.id}`] ? questionTables[`${question.id}`] : null}) %>
+          <% if((i % 2) == 1){ %>
+            </div>
+          <% } %>
+        <% }); %>
+    </div>
+
+    <script type="text/javascript">
+      var element = document.getElementById("q-<%= currentQuestion %>");
+      element.scrollIntoView({behavior: "smooth", inline: "nearest"});
+    </script>
+
+  </body>
+</html>

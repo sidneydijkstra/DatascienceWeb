@@ -1,0 +1,61 @@
+<div id="map<%= id %>" style="height:500px;"></div>
+<script type="text/javascript">
+  // get gecoder using an provider https://github.com/geocoder-php/geocoder-js/blob/master/example/bing.html
+  var geocoder = GeocoderJS.createGeocoder({provider: 'bing', apiKey: 'As11PsBXYvAoGEXmz59ZWl93T8_OACdXi2QnRKWMRIUK6hzOXgN3BcZHnbKyPZYo'});
+
+  // setup map
+  var map = L.map('map<%= id %>').setView([52,5], 5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // start map exists
+  <% if(map && map.table.state){ %>
+    // create location cashe
+    var locationCache = [];
+
+    // setup cluster if needed
+    <% if (map.cluster){ %>
+      var markers = L.markerClusterGroup();
+      map.addLayer(markers);
+    <% } %>
+
+    // start map result loop
+    <% map.table.result.forEach((location, i) => { %>
+      // start geocoder callback
+      geocoder.geocode("<%= location.loc %>", function(result) {
+        // get location cashe and setup loc variable
+        if (!locationCache["<%= location.loc %>"])
+          locationCache["<%= location.loc %>"] = result[0];
+        var loc = locationCache["<%= location.loc %>"];
+
+        // generate message
+        var message = `
+          <div class='text-center'>
+            <% Object.values(location).forEach((item, i) => { %>
+              <%= item %><br>
+            <% }); %>
+          </div>
+        `;
+
+        // check if cluster and setup marker or cluster marker
+        <% if (map.cluster){ %>
+          console.log(loc);
+          var marker = L.marker(new L.LatLng(loc.latitude, loc.longitude)).bindPopup(message);
+          markers.addLayer(marker);
+        <% }else{ %>
+          L.marker([loc.latitude, loc.longitude]).addTo(map).bindPopup(message);
+        <% } %>
+
+        // on first match
+        <% if(i==0){ %>
+          //document.getElementById('map').hidden = false
+          map.setView([loc.latitude, loc.longitude], 5);
+        <% } %>
+      });
+      // end geocoder callback
+    <% }); %>
+    // end map result loop
+  <% } %>
+  // end map exists
+</script>
