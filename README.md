@@ -24,7 +24,7 @@ npm install
 ```
 
 ### Env
-To set up the database we will direct you to [this] python project and [\[this\]](https://github.com/Medooosa/Csharp-Parser) C# project for parsing all the data to .csv format. The connection with the database is established using the variables in the .env file. T o connect to the database create this .env file and add these parameters:
+To set up the database we will direct you to [this] python project and [\[this\]](https://github.com/Medooosa/Csharp-Parser) C# project for parsing all the data to .csv format. The connection with the database is established using the variables in the .env file. To connect to the database create this .env file and add these parameters:
 ```
 DATABASE_POOL_LIMIT=20
 DATABASE_IP=
