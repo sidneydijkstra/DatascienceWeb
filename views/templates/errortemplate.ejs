@@ -10,12 +10,10 @@
        </div>
        <div class="modal-body">
          <p>
-           Error in function <b><%= currentWebError.function %></b> on routing <b><%= currentWebError.from %></b> with protocol <b><%= currentWebError.protocol %></b>.
+           Error at location <b><%= currentWebError.location %></b> on routing <b><%= currentWebError.from %></b>.
          </p>
          <div class="form-group">
-           <textarea class="form-control" rows="3" disabled><%= JSON.stringify(currentWebError.error, null, 2) %>
-
-<%= currentWebError.error %></textarea>
+           <textarea class="form-control" rows="3" disabled><%= JSON.stringify(currentWebError.error, null, 2) %></textarea>
          </div>
        </div>
        <div class="modal-footer">

@@ -1,11 +1,12 @@
 <header class="p-3 mb-3 border-bottom">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-          <i class="fas fa-file-csv fa-2x"></i>
-        </a>
+
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <a href="/" class="d-flex align-items-center mb-2 mb-md-0 text-dark text-decoration-none">
+            <i class="fas fa-file-csv fa-2x"></i>
+          </a>
           <a class="nav-item nav-link <%= header != "index" ? "text-secondary" : "" %>" href="/">Home</a>
           <a class="nav-item nav-link <%= header != "table" ? "text-secondary" : "" %>" href="/table">Tables</a>
           <a class="nav-item nav-link <%= header != "question" ? "text-secondary" : "" %>" href="/question">Questions</a>
@@ -13,4 +14,5 @@
           <a class="nav-item nav-link <%= header != "raw" ? "text-secondary" : "" %>" href="/raw">Raw</a>
         </ul>
     </div>
-  </header>
+  </div>
+</header>

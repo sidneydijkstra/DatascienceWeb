@@ -1,5 +1,7 @@
+// setup dotenv config for .env file usage
 require('dotenv').config();
 
+// get dependencies
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,14 +9,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
 
+// create routes
 var indexRouter = require('./routes/index');
 var tableviewRouter = require('./routes/tableview');
 var rawviewRouter = require('./routes/rawview');
 var questionviewRouter = require('./routes/questionview');
 var mapviewRouter = require('./routes/mapview');
 
+// setup express app
 var app = express();
+
+// set app using json
 app.use(express.json());
+
+// setup session information
 app.use(session({
     secret: "a9b8c7d6tertcessectret$#%*^@!&",
     saveUninitialized: true,
@@ -22,16 +30,21 @@ app.use(session({
     resave: false
 }));
 
-// view engine setup
+// view engine setup, using .ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// setup logger
 app.use(logger('dev'));
-app.use(express.json());
+// setup url encoding
 app.use(express.urlencoded({ extended: false }));
+// setup cookieparser
 app.use(cookieParser());
+
+// create public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// setup routes
 app.use('/', indexRouter);
 app.use('/table', tableviewRouter);
 app.use('/raw', rawviewRouter);
@@ -54,4 +67,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// export app
 module.exports = app;

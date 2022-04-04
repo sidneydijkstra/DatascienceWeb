@@ -1,24 +1,36 @@
+// get express-validator, body and validationResult functions
 const { body,validationResult } = require('express-validator');
+// get errorFactory, contains static function to create error modules
+var errorFactory = require('../factories/errorfactory.js')
+
+// get database and databasecontroller
 var db = require('./database/databasecontroller.js');
 var database = require("./database/database.js")
 
 exports.raw_show = async function(req, res, next){
+  // ping database to get status
   var ping = await database.isConnected();
 
+  // check ping status
   if(!ping.state){
+    // reset session variable
     req.session.sqlRaw = `SELECT * FROM db_datascience.Movie LIMIT 10;`;
-    req.session.webError = {
-      function: 'rawviewcontroller.raw_show()',
-      protocol: req.protocol,
-      from: req.originalUrl,
-      error: ping.error
-    }
+
+    // create exception error
+    var error = errorFactory.createExceptionError('rawviewcontroller.raw_show()', req, ping.error);
+    req.session.webError = error;
+
+    // redirect to index
     return res.redirect('/');
   }
 
+  // get session variable
   var sqlRaw = req.session.sqlRaw ? req.session.sqlRaw : `SELECT * FROM db_datascience.Movie LIMIT 10;`;
+
+  // get query result
   var query = await db.raw(sqlRaw);
 
+  // render rawview page
   res.render('rawview', {
     header: "raw",
     lastSql: sqlRaw,
@@ -28,21 +40,18 @@ exports.raw_show = async function(req, res, next){
 };
 
 exports.raw_get = async function(req, res, next){
+  // do validation
   const value = validationResult(req);
+  // check validation
   if (!value.isEmpty()){
-    req.session.webError = {
-      function: 'rawviewcontroller.raw_get()',
-      protocol: req.protocol,
-      from: req.originalUrl,
-      error: value.error
-    }
+    // no error handling because sql errors get filter and pushed to the user!
+    // redirect to index
     return res.redirect('/');
   }
 
+  // set session variable
   req.session.sqlRaw = req.body.sql;
+
+  // redirect to raw
   res.redirect('/raw');
 };
-
-/*
-SELECT c.country_Id, c.movie_Id, c.movieOrShowName, c.country, (SELECT ct.movieOrShowName as name FROM db_datascience.Country ct WHERE ct.movie_Id IS NOT NULL) AS cc FROM db_datascience.Country c WHERE c.movie_Id IS NOT NULL AND c.movieOrShowName LIKE cc.name LIMIT 10;
-*/

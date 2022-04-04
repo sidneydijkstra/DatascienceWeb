@@ -65,7 +65,11 @@ class Database{
   }
 
   escape(value){
-    return this.pool().escape(value);
+    return this.pool.escape(value);
+  }
+
+  escapeId(value){
+    return this.pool.escapeId(value);
   }
 
   getConnection(){

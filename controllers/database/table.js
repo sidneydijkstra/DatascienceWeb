@@ -47,7 +47,7 @@ class Table{
         Object.keys(search).forEach((key, i) => {
           if (this.columns.includes(key) && search[key] != ''){
             searchSql += searchSql == "" ? "WHERE " : " AND ";
-            searchSql += `${key} LIKE '${search[key]}'`;
+            searchSql += `${database.escapeId(key)} LIKE ${database.escape(search[key])}`;
           }
         });
 
