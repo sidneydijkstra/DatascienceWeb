@@ -7,13 +7,25 @@ var errorFactory = require('../factories/errorfactory.js')
 var db = require('./database/databasecontroller.js');
 var database = require("./database/database.js")
 
+var fs = require('fs');
+var rFiles = [];
+fs.readdir('./rscripts', (err, files) => {
+  files.forEach(file => {
+    rFiles[file] = {
+      name: file,
+      path: `./rscripts/${file}`,
+      output: 0
+    }
+  });
+});
+
 // get r-script, used for running R code
 var R = require('r-integration');
 
 exports.rconsole_show= async function(req, res, next){
   // get session variable
   var currentRCode = req.session.rCode ? req.session.rCode : "cat('hello world!');";
-  
+
   var result = "None"
   try {
     //result = R.executeRScript("./rscripts/test.R");
