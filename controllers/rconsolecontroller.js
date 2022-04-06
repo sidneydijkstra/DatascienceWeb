@@ -21,9 +21,6 @@ var rFiles = JSON.parse(rawdata)
 rFiles.forEach((file, i) => {
   file.code = fs.readFileSync(file.path, 'utf8');
 });
-console.log(rFiles);
-
-
 
 exports.rconsole_show= async function(req, res, next){
   // get session variable
