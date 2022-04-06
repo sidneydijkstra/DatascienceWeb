@@ -1,10 +1,10 @@
-<div id="map<%= id %>" style="height:500px;"></div>
+<div id="map<%= id %>" style="height:800px;"></div>
 <script type="text/javascript">
   // get gecoder using an provider https://github.com/geocoder-php/geocoder-js/blob/master/example/bing.html
   var geocoder = GeocoderJS.createGeocoder({provider: 'bing', apiKey: 'As11PsBXYvAoGEXmz59ZWl93T8_OACdXi2QnRKWMRIUK6hzOXgN3BcZHnbKyPZYo'});
 
   // setup map
-  var map = L.map('map<%= id %>').setView([52,5], 5);
+  var map = L.map('map<%= id %>').setView([53.210074, 5.797209], 8);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);

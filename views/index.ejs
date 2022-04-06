@@ -6,9 +6,10 @@
 
     <%- include('includes/bootstrap.ejs', {}) %>
     <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/map.ejs', {}) %>
 
   </head>
-  <body class="paddingz">
+  <body class="d-flex flex-column min-vh-100 paddingz">
     <%- include('templates/header.ejs', {header: header}) %>
 
     <div class="container-fluid paddings">
@@ -16,5 +17,6 @@
       <%- include('templates/errortemplate.ejs',{currentWebError: currentWebError}) %>
     </div>
 
+    <%- include('templates/footer.ejs') %>
   </body>
 </html>

@@ -9,7 +9,7 @@
     <%- include('includes/script.ejs', {}) %>
 
   </head>
-  <body class="paddingz">
+  <body class="d-flex flex-column min-vh-100 paddingz">
     <%- include('templates/header.ejs', {header: header}) %>
 
     <div class="container-fluid">
@@ -29,5 +29,6 @@
       element.scrollIntoView({behavior: "smooth", inline: "nearest"});
     </script>
 
+    <%- include('templates/footer.ejs') %>
   </body>
 </html>
