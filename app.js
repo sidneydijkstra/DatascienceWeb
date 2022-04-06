@@ -12,9 +12,10 @@ var logger = require('morgan');
 // create routes
 var indexRouter = require('./routes/index');
 var tableviewRouter = require('./routes/tableview');
-var rawviewRouter = require('./routes/rawview');
 var questionviewRouter = require('./routes/questionview');
 var mapviewRouter = require('./routes/mapview');
+var rawviewRouter = require('./routes/rawview');
+var rConsoleRouter = require('./routes/rconsoleview');
 
 // setup express app
 var app = express();
@@ -47,9 +48,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // setup routes
 app.use('/', indexRouter);
 app.use('/table', tableviewRouter);
-app.use('/raw', rawviewRouter);
 app.use('/question', questionviewRouter);
 app.use('/map', mapviewRouter);
+app.use('/raw', rawviewRouter);
+app.use('/rconsole', rConsoleRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

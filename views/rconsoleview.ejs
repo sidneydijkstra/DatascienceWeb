@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>rconsole</title>
+
+    <%- include('includes/bootstrap.ejs', {}) %>
+    <%- include('includes/style.ejs', {}) %>
+    <%- include('includes/script.ejs', {}) %>
+
+  </head>
+  <body class="paddingz">
+    <%- include('templates/header.ejs', {header: header}) %>
+
+    <div class="container-fluid">
+
+      <div class="card">
+        <div class="card-body">
+          <h1>R Console</h1>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <!-- CONSOLE TAB -->
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="nav-console-tab" data-bs-toggle="tab" data-bs-target="#nav-console" type="button" role="tab" aria-controls="nav-console" aria-selected="true">Console</button>
+            </li>
+
+            <!-- OTHER TABS -->
+            <% rFiles.forEach((file, i) => { %>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="nav-<%= file.id %>-tab" data-bs-toggle="tab" data-bs-target="#nav-<%= file.id %>" type="button" role="tab" aria-controls="nav-<%= file.id %>" aria-selected="false"><%= file.name %></button>
+              </li>
+            <% }); %>
+          </ul>
+
+
+          <div class="tab-content" id="myTabContent">
+            <!-- CONSOLE PANEL -->
+            <div class="tab-pane fade show active" id="nav-console" role="tabpanel" aria-labelledby="nav-console-tab">
+              <br>
+              <h4>R Console</h4>
+              <br>
+              <form action="/rconsole/grconsole" method="post">
+                <div class="form-group">
+                  <textarea class="form-control" id="rcode" name="rcode" rows="3"><%= rCode %></textarea>
+                </div>
+                <div class="paddings">
+                  <div class="d-grid mx-auto">
+                  <button type="submit" class="form-control btn btn-primary" onclick="onStartLoading(this)">Run</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="sql" name="sql" rows="3" disabled><%= rOutput %></textarea>
+                </div>
+              </form>
+            </div>
+
+            <!-- OTHER PANELS -->
+            <% rFiles.forEach((file, i) => { %>
+              <div class="tab-pane fade show" id="nav-<%= file.id %>" role="tabpanel" aria-labelledby="nav-<%= file.id %>-tab">
+                <br>
+                <h4><%= file.name %></h4>
+                <br>
+                <form action="#" method="post">
+                  <h5>Code:</h5>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="5" disabled><%= file.code %></textarea>
+                  </div>
+                  <h5>Output:</h5>
+                  <img src="<%= file.img %>" class="img-fluid mx-auto d-block">
+                </form>
+              </div>
+            <% }); %>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+</html>
