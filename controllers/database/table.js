@@ -1,11 +1,16 @@
+// get database
 var database = require("./database.js")
-// %0%' AND movie_Id LIKE '%1%
+
+// class for storing database table
 class Table{
   constructor(table, columns) {
+    // setup table name and column names
     this.table = table;
     this.columns = columns;
   }
 
+
+  // function to get table entries with limit
   async get(limit){
     return new Promise((resolve, reject)=>{
       try {
@@ -40,6 +45,7 @@ class Table{
     });
   }
 
+  // function to get entries from table based on search statement and limit
   async search(search, limit){
     return new Promise((resolve, reject)=>{
       try {
@@ -82,6 +88,7 @@ class Table{
     });
   }
 
+  // get the total entries of a table
   async count(){
     try {
       return new Promise((resolve, reject)=>{

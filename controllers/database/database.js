@@ -1,7 +1,10 @@
+// get mysql
 var mysql = require("mysql")
 
+// class for setting up connection with database
 class Database{
   constructor() {
+    // get .env variables
     this.connectionLimit = process.env.DATABASE_POOL_LIMIT;
     this.host = process.env.DATABASE_IP;
     this.port = process.env.DATABASE_PORT;
@@ -12,6 +15,7 @@ class Database{
     this.setup();
   }
 
+  // function for setting up the connection to the database
   setup(){
     try {
       this.pool = mysql.createPool({
@@ -30,6 +34,8 @@ class Database{
     }
   }
 
+
+  // function to check if there is still a connection to the database
   async isConnected(){
     return new Promise((resolve, reject)=>{
 
@@ -64,18 +70,22 @@ class Database{
     });
   }
 
+  // escape function used to escape user input normaly
   escape(value){
     return this.pool.escape(value);
   }
 
+  // escape function used to escape user input for id's
   escapeId(value){
     return this.pool.escapeId(value);
   }
 
+  // function to get the mysql connection
   getConnection(){
     return this.pool;
   }
 
+  // function to get the status/info about the database connection
   getConnectionStatus(){
     return {
       connectionLimit : this.connectionLimit,
@@ -87,6 +97,6 @@ class Database{
   }
 }
 
+// create instance and set as export
 var db = new Database();
-
 module.exports = db;
