@@ -1,10 +1,12 @@
 var database = require("../controllers/database/database.js");
 
+// class for creating error object used for error display
 class ErrorFactory{
   constructor() {
     // isEmpty
   }
 
+  // function for creating exception error object
   createExceptionError(location, request, error){
     return {
       location: location,
@@ -13,6 +15,7 @@ class ErrorFactory{
     };
   }
 
+  // function for creating validation error object
   createValidationError(location, request, field, error){
     return {
       location: location,
@@ -24,5 +27,4 @@ class ErrorFactory{
 }
 
 var ef = new ErrorFactory();
-
 module.exports = ef;
